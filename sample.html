@@ -18,7 +18,7 @@
         overflow: hidden;
       }
 
-      .canvas {
+      #canvas {
         box-sizing: border-box;
         background-color: white;
         aspect-ratio: 4 / 3;
@@ -89,8 +89,39 @@
     </style>
   </head>
   <body>
-    <div class="canvas">
-      <p class="l">test</p>
-    </div>
+    <div id="canvas"></div>
+    <script>
+      const canvas = document.getElementById("canvas");
+      // declare queue
+      let queue = [
+        ["text", "welcome", "xl rightalign left"],
+        ["text", "this is the first text", "l center vcenter centeralign"],
+        ["text", "and the second text is this", "m right leftalign bottom"],
+      ];
+
+      function doFirstQueue() {
+        // this will do the first thing in the queue - display text, change bg, play music, whatever
+        let firstqueue = queue[0];
+        if (firstqueue[0] == "text") {
+          const text = document.createElement("p");
+
+          text.textContent = firstqueue[1];
+          text.className = firstqueue[2];
+          canvas.replaceChildren(text); // replace all internals of canvas with new text
+        }
+      }
+
+      doFirstQueue();
+
+      document.addEventListener("keydown", (event) => {
+        if (event.repeat) return;
+
+        if (event.code === "Space") {
+          // pops queue and refreshes screen
+          queue.shift();
+          doFirstQueue();
+        }
+      });
+    </script>
   </body>
 </html>
