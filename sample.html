@@ -19,18 +19,17 @@
       }
 
       .canvas {
+        padding-left: 2cqw;
+        padding-right: 2cqw;
+        box-sizing: border-box;
         background-color: white;
         aspect-ratio: 4 / 3;
         width: min(100vw, 177.78vh);
         height: min(100vh, 56.25vw);
-        position: relative;
+        display: flex;
       }
 
       p {
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin: 2cqw;
         font-family: Georgia;
       }
 
@@ -41,26 +40,62 @@
       }
 
       .m {
-        font-size: 6cqw;
+        font-size: 4cqw;
       }
 
       .l {
-        font-size: 10cqw;
+        font-size: 6cqw;
       }
 
       .xl {
-        font-size: 16cqw;
+        font-size: 10cqw;
       }
 
       .xxl {
-        font-size: 25cqw;
+        font-size: 18cqw;
+      }
+
+      /* positioning */
+
+      .center {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .left {
+        margin-right: auto;
+      }
+
+      .right {
+        margin-left: auto;
+      }
+
+      .vcenter {
+        align-self: center;
+      }
+
+      .top {
+        align-self: flex-start;
+      }
+
+      .bottom {
+        align-self: flex-end;
+      }
+
+      .centeralign {
+        text-align: center;
+      }
+
+      .rightalign {
+        text-align: right;
       }
     </style>
   </head>
   <body>
     <div class="canvas">
-      <p class="m">
-        the warmth of sunlight hitting your face wakes you up from your sleep.
+      <p class="l centeralign vcenter">
+        warm sunlight floods through your window, hitting your face and breaking
+        your slumber.
       </p>
     </div>
   </body>
