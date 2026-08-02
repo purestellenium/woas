@@ -1,6 +1,67 @@
 <!doctype html>
 <html>
   <!-- this is the sample html file, what we're aiming for the compile script to create. i'm gonna build out the basic workings of the engine in this file first, and then get it to a place where the python script can generate it -->
-  <head></head>
-  <body></body>
+  <head>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: black;
+        display: grid;
+        place-items: center;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .canvas {
+        background-color: white;
+        aspect-ratio: 4 / 3;
+        width: min(100vw, 177.78vh);
+        height: min(100vh, 56.25vw);
+        position: relative;
+      }
+
+      p {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 2cqw;
+        font-family: Georgia;
+      }
+
+      /* text sizes */
+
+      .s {
+        font-size: 3cqw;
+      }
+
+      .m {
+        font-size: 6cqw;
+      }
+
+      .l {
+        font-size: 10cqw;
+      }
+
+      .xl {
+        font-size: 16cqw;
+      }
+
+      .xxl {
+        font-size: 25cqw;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas">
+      <p class="m">
+        the warmth of sunlight hitting your face wakes you up from your sleep.
+      </p>
+    </div>
+  </body>
 </html>
