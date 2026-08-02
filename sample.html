@@ -19,8 +19,6 @@
       }
 
       .canvas {
-        padding-left: 2cqw;
-        padding-right: 2cqw;
         box-sizing: border-box;
         background-color: white;
         aspect-ratio: 4 / 3;
@@ -28,10 +26,12 @@
         height: min(100vh, 56.25vw);
         display: flex;
         container-type: inline-size;
+        flex-direction: column;
       }
 
       p {
         font-family: Georgia;
+        margin: 2cqw;
       }
 
       /* text sizes */
@@ -58,28 +58,24 @@
 
       /* positioning */
 
-      .center {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .left {
-        margin-right: auto;
-      }
-
-      .right {
-        margin-left: auto;
-      }
-
       .vcenter {
-        align-self: center;
-      }
-
-      .top {
-        align-self: flex-start;
+        margin-top: auto;
+        margin-bottom: auto;
       }
 
       .bottom {
+        margin-top: auto;
+      }
+
+      .center {
+        align-self: center;
+      }
+
+      .left {
+        align-self: flex-start;
+      }
+
+      .right {
         align-self: flex-end;
       }
 
@@ -94,10 +90,7 @@
   </head>
   <body>
     <div class="canvas">
-      <p class="l centeralign vcenter">
-        warm sunlight floods through your window, hitting your face and breaking
-        your slumber.
-      </p>
+      <p class="l">test</p>
     </div>
   </body>
 </html>

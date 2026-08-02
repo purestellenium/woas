@@ -7,7 +7,7 @@ commands:
 - show text
   - text itself in quotes
   - classes (attributes like size, location) separated by spaces
-  - special attributes (font color and font family) which are too tedious to set by 
+  - special attributes (font color, font family, margin) which are too tedious to set by 
 - set bg
 - start playing music
 - stop playing music
