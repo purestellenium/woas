@@ -28,8 +28,23 @@ background:
 ["bg", "color or url(path)"]
 
 music (NOTE THAT THIS WONT WORK AS THE FIRST INPUT):
-["music", "play", "url(path)"]
+["music", "play", "path"]
 or
 ["music", "stop"]
 or
 ["music", "pause"]
+
+SYNTAX IN WOAS
+
+text:
+"text here" class list here / color(null if none) font-family(null if none)
+
+background:
+bg pathtofile.jpg OR color
+
+music:
+music play pathtofile.mp3
+or
+music stop
+or
+music pause

@@ -1,6 +1,8 @@
-title my game
-favicon favicon.ico
-font Georgia
-color blue
---- <- end of defaults
-"hello" l red left leftalign
+"space to start" xl center vcenter / black
+music play nyancat.mp3
+"welcome" xl rightalign left
+music pause
+"this is the first text" l center vcenter centeralign / #ff0000 sans-serif
+bg gray
+music play
+"and the second text is this" m right leftalign bottom / null monospace
