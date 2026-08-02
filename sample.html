@@ -102,6 +102,7 @@
           "#ff0000",
           "sans-serif",
         ],
+        ["bg", "gray"],
         [
           "text",
           "and the second text is this",
@@ -125,6 +126,14 @@
           text.style.color = firstqueue[3] ?? currentColor;
           text.style.fontFamily = firstqueue[4] ?? currentFont;
           canvas.replaceChildren(text); // replace all internals of canvas with new text
+          return;
+        } else if (firstqueue[0] == "bg") {
+          canvas.style.background = firstqueue[1];
+          queue.shift();
+          doFirstQueue();
+          return;
+        } else {
+          return;
         }
       }
 
