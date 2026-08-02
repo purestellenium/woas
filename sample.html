@@ -95,9 +95,24 @@
       // declare queue
       let queue = [
         ["text", "welcome", "xl rightalign left"],
-        ["text", "this is the first text", "l center vcenter centeralign"],
-        ["text", "and the second text is this", "m right leftalign bottom"],
+        [
+          "text",
+          "this is the first text",
+          "l center vcenter centeralign",
+          "#ff0000",
+          "sans-serif",
+        ],
+        [
+          "text",
+          "and the second text is this",
+          "m right leftalign bottom",
+          "",
+          "monospace",
+        ],
       ];
+      // declare defaults
+      let currentFont = "Georgia";
+      let currentColor = "black";
 
       function doFirstQueue() {
         // this will do the first thing in the queue - display text, change bg, play music, whatever
@@ -107,6 +122,8 @@
 
           text.textContent = firstqueue[1];
           text.className = firstqueue[2];
+          text.style.color = firstqueue[3] ?? currentColor;
+          text.style.fontFamily = firstqueue[4] ?? currentFont;
           canvas.replaceChildren(text); // replace all internals of canvas with new text
         }
       }
