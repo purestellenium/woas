@@ -1,3 +1,6 @@
+title my game
+favicon favicon.ico
 font Georgia
+color blue
 --- <- end of defaults
 "hello" l red left leftalign

@@ -1,153 +1,176 @@
 <!doctype html>
 <html>
-  <!-- this is the sample html file, what we're aiming for the compile script to create. i'm gonna build out the basic workings of the engine in this file first, and then get it to a place where the python script can generate it -->
-  <head>
-    <style>
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-      }
+    <!-- this is the sample html file, what we're aiming for the compile script to create. i'm gonna build out the basic workings of the engine in this file first, and then get it to a place where the python script can generate it -->
+    <head>
+        <title>title</title>
+        <style>
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+            }
 
-      body {
-        background-color: black;
-        display: grid;
-        place-items: center;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-      }
+            body {
+                background-color: black;
+                display: grid;
+                place-items: center;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+            }
 
-      #canvas {
-        box-sizing: border-box;
-        background-color: white;
-        aspect-ratio: 4 / 3;
-        width: min(100vw, 177.78vh);
-        height: min(100vh, 56.25vw);
-        display: flex;
-        container-type: inline-size;
-        flex-direction: column;
-      }
+            #canvas {
+                box-sizing: border-box;
+                background-color: white;
+                aspect-ratio: 4 / 3;
+                width: min(100vw, 177.78vh);
+                height: min(100vh, 56.25vw);
+                display: flex;
+                container-type: inline-size;
+                flex-direction: column;
+            }
 
-      p {
-        font-family: Georgia;
-        margin: 2cqw;
-      }
+            p {
+                font-family: Georgia;
+                margin: 2cqw;
+            }
 
-      /* text sizes */
+            /* text sizes */
 
-      .s {
-        font-size: 3cqw;
-      }
+            .s {
+                font-size: 3cqw;
+            }
 
-      .m {
-        font-size: 4cqw;
-      }
+            .m {
+                font-size: 4cqw;
+            }
 
-      .l {
-        font-size: 6cqw;
-      }
+            .l {
+                font-size: 6cqw;
+            }
 
-      .xl {
-        font-size: 10cqw;
-      }
+            .xl {
+                font-size: 10cqw;
+            }
 
-      .xxl {
-        font-size: 18cqw;
-      }
+            .xxl {
+                font-size: 18cqw;
+            }
 
-      /* positioning */
+            /* positioning */
 
-      .vcenter {
-        margin-top: auto;
-        margin-bottom: auto;
-      }
+            .vcenter {
+                margin-top: auto;
+                margin-bottom: auto;
+            }
 
-      .bottom {
-        margin-top: auto;
-      }
+            .bottom {
+                margin-top: auto;
+            }
 
-      .center {
-        align-self: center;
-      }
+            .center {
+                align-self: center;
+            }
 
-      .left {
-        align-self: flex-start;
-      }
+            .left {
+                align-self: flex-start;
+            }
 
-      .right {
-        align-self: flex-end;
-      }
+            .right {
+                align-self: flex-end;
+            }
 
-      .centeralign {
-        text-align: center;
-      }
+            .centeralign {
+                text-align: center;
+            }
 
-      .rightalign {
-        text-align: right;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="canvas"></div>
-    <script>
-      const canvas = document.getElementById("canvas");
-      // declare queue
-      let queue = [
-        ["text", "welcome", "xl rightalign left"],
-        [
-          "text",
-          "this is the first text",
-          "l center vcenter centeralign",
-          "#ff0000",
-          "sans-serif",
-        ],
-        ["bg", "gray"],
-        [
-          "text",
-          "and the second text is this",
-          "m right leftalign bottom",
-          "",
-          "monospace",
-        ],
-      ];
-      // declare defaults
-      let currentFont = "Georgia";
-      let currentColor = "black";
+            .rightalign {
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="canvas"></div>
+        <script>
+            const canvas = document.getElementById("canvas");
+            // declare queue
+            let queue = [
+                ["text", "space to start", "xl center vcenter", "black"],
+                ["music", "play", "nyan_cat.mp3"],
+                ["text", "welcome", "xl rightalign left"],
+                ["music", "pause"],
+                [
+                    "text",
+                    "this is the first text",
+                    "l center vcenter centeralign",
+                    "#ff0000",
+                    "sans-serif",
+                ],
+                ["bg", "gray"],
+                ["music", "play"],
+                [
+                    "text",
+                    "and the second text is this",
+                    "m right leftalign bottom",
+                    null,
+                    "monospace",
+                ],
+            ];
+            // declare defaults
+            let currentFont = "Georgia";
+            let currentColor = "blue";
+            let music = new Audio();
 
-      function doFirstQueue() {
-        // this will do the first thing in the queue - display text, change bg, play music, whatever
-        let firstqueue = queue[0];
-        if (firstqueue[0] == "text") {
-          const text = document.createElement("p");
+            function doFirstQueue() {
+                // this will do the first thing in the queue - display text, change bg, play music, whatever
+                let firstqueue = queue[0];
+                if (firstqueue[0] == "text") {
+                    const text = document.createElement("p");
 
-          text.textContent = firstqueue[1];
-          text.className = firstqueue[2];
-          text.style.color = firstqueue[3] ?? currentColor;
-          text.style.fontFamily = firstqueue[4] ?? currentFont;
-          canvas.replaceChildren(text); // replace all internals of canvas with new text
-          return;
-        } else if (firstqueue[0] == "bg") {
-          canvas.style.background = firstqueue[1];
-          queue.shift();
-          doFirstQueue();
-          return;
-        } else {
-          return;
-        }
-      }
+                    text.textContent = firstqueue[1];
+                    text.className = firstqueue[2];
+                    text.style.color = firstqueue[3] ?? currentColor;
+                    text.style.fontFamily = firstqueue[4] ?? currentFont;
+                    canvas.replaceChildren(text); // replace all internals of canvas with new text
+                    return;
+                } else if (firstqueue[0] == "bg") {
+                    canvas.style.background = firstqueue[1];
+                    queue.shift();
+                    doFirstQueue();
+                    return;
+                } else if (firstqueue[0] == "music") {
+                    if (firstqueue[1] == "play") {
+                        if (firstqueue[2]) {
+                            music = new Audio(firstqueue[2]);
+                        }
+                        music.loop = true;
+                        music.play();
+                    } else if (firstqueue[1] == "stop") {
+                        music.pause();
+                        music.currentTime = 0;
+                    } else if (firstqueue[1] == "pause") {
+                        music.pause();
+                    } else {
+                    }
+                    queue.shift();
+                    doFirstQueue();
+                    return;
+                } else {
+                    return;
+                }
+            }
 
-      doFirstQueue();
+            doFirstQueue();
 
-      document.addEventListener("keydown", (event) => {
-        if (event.repeat) return;
+            document.addEventListener("keydown", (event) => {
+                if (event.repeat) return;
 
-        if (event.code === "Space") {
-          // pops queue and refreshes screen
-          queue.shift();
-          doFirstQueue();
-        }
-      });
-    </script>
-  </body>
+                if (event.code === "Space") {
+                    // pops queue and refreshes screen
+                    queue.shift();
+                    doFirstQueue();
+                }
+            });
+        </script>
+    </body>
 </html>

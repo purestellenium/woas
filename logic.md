@@ -16,3 +16,20 @@ commands:
 
 REMEMBER
 before converting the sample into the template for the compiler, remove all the things that should be set by defaults
+
+SYNTAX IN HTML
+
+text:
+["text", "text here", "class list here", "color - set null if none", "font-family - set null if none"]
+
+--- commands below move on to next command after running, not waiting for input ----
+
+background:
+["bg", "color or url(path)"]
+
+music (NOTE THAT THIS WONT WORK AS THE FIRST INPUT):
+["music", "play", "url(path)"]
+or
+["music", "stop"]
+or
+["music", "pause"]
