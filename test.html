@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+    <html>
     <head>
         <title>title</title>
         <style>
@@ -92,36 +92,13 @@
         <div id="canvas"></div>
         <script>
             const canvas = document.getElementById("canvas");
-            // declare queue
-            let queue = [
-                ["text", "space to start", "xl center vcenter", "black"],
-                ["music", "play", "nyan_cat.mp3"],
-                ["text", "welcome", "xl rightalign left"],
-                ["music", "pause"],
-                [
-                    "text",
-                    "this is the first text",
-                    "l center vcenter centeralign",
-                    "#ff0000",
-                    "sans-serif",
-                ],
-                ["bg", "gray"],
-                ["music", "play"],
-                [
-                    "text",
-                    "and the second text is this",
-                    "m right leftalign bottom",
-                    null,
-                    "monospace",
-                ],
-            ];
-            // declare defaults
+            let queue = [["text", "space to start", "xl center vcenter", "black", null], ["music", "play", "nyan_cat.mp3"], ["text", "welcome", "xl rightalign left", null, null], ["music", "pause"], ["text", "this is the first text", "l center vcenter centeralign", "#ff0000", "sans-serif"], ["bg", "gray"], ["music", "play"], ["text", "and the second text is this", "m right leftalign bottom", null, "monospace"]];
+
             let currentFont = "Georgia";
             let currentColor = "blue";
             let music = new Audio();
 
             function doFirstQueue() {
-                // this will do the first thing in the queue - display text, change bg, play music, whatever
                 let firstqueue = queue[0];
                 if (firstqueue[0] == "text") {
                     const text = document.createElement("p");
@@ -130,7 +107,7 @@
                     text.className = firstqueue[2];
                     text.style.color = firstqueue[3] ?? currentColor;
                     text.style.fontFamily = firstqueue[4] ?? currentFont;
-                    canvas.replaceChildren(text); // replace all internals of canvas with new text
+                    canvas.replaceChildren(text);
                     return;
                 } else if (firstqueue[0] == "bg") {
                     canvas.style.background = firstqueue[1];
@@ -172,4 +149,5 @@
             });
         </script>
     </body>
-</html>
+    </html>
+        

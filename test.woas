@@ -1,5 +1,5 @@
 "space to start" xl center vcenter / black
-music play nyancat.mp3
+music play nyan_cat.mp3
 "welcome" xl rightalign left
 music pause
 "this is the first text" l center vcenter centeralign / #ff0000 sans-serif
