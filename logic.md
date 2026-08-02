@@ -13,3 +13,6 @@ commands:
 - stop playing music
 - show persistent text on the screen
 - remove persistent text
+
+REMEMBER
+before converting the sample into the template for the compiler, remove all the things that should be set by defaults
