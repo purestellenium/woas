@@ -95,6 +95,34 @@ def compile_game_from_file(filepath):
                     match = re.match(r'^title\s+"((?:\\.|[^"\\])*)"', line.strip())
                     if match:
                         title = match.group(1).replace('\\"', '"')
+                elif line.startswith('bg '):
+                    bg_val = line[3:].strip()
+                    if re.search(r'\.(png|jpg|jpeg|gif|webp)$', bg_val, re.I) and not bg_val.startswith('url('):
+                        bg_val = f"url('{bg_val}')"
+                    queue.append(["bg", bg_val])
+                elif line.startswith('font '):
+                    match = re.match(r'^font\s+(?:"((?:\\.|[^"\\])*)"|(.+))', line.strip())
+                    if match:
+                        font_name = match.group(1) or match.group(2)
+                        queue.append(["font", font_name.replace('\\"', '"')])
+                elif line.startswith('color '):
+                    queue.append(["color", line[6:].strip().strip('"\'')])
+                elif line.startswith('music '):
+                    parts = line.strip().split(maxsplit=2)
+                    if len(parts) >= 2:
+                        cmd = ["music", parts[1]]
+                        if len(parts) == 3:
+                            audio = parts[2]
+                            if audio.startswith('url(') and audio.endswith(')'):
+                                audio = audio[4:-1].strip('"\'')
+                            cmd.append(audio)
+                        queue.append(cmd)
+                        
+                elif line.startswith('jump '):
+                    queue.append(["jump", line[5:].strip()])
+                    
+                elif line.startswith('end '):
+                    queue.append(["end", line[4:].strip()])
                 else:
                     queue.append(line.split())
         queue_json = json.dumps(queue)
@@ -133,6 +161,7 @@ def compile_game_from_file(filepath):
                 display: flex;
                 justify-content: center;
                 gap: 7.5cqw;
+                flex-wrap: wrap;
             }
 
             .choice p {
@@ -150,6 +179,7 @@ def compile_game_from_file(filepath):
             a {
                 font-family: Georgia;
                 margin: 2cqw;
+                font-size: 3cqw;
             }
 
             /* text sizes */
@@ -238,6 +268,8 @@ def compile_game_from_file(filepath):
                     return;
                 } else if (firstqueue[0] == "bg") {
                     canvas.style.background = firstqueue[1];
+                    canvas.style.backgroundSize = "cover";
+                    canvas.style.backgroundPosition = "center";
                     queue.shift();
                     doFirstQueue();
                     return;
@@ -260,8 +292,6 @@ def compile_game_from_file(filepath):
                     return;
                 } else if (firstqueue[0] == "choice") {
                     choiceActive = true;
-                    // create choice container
-
                     let promptText = firstqueue[1];
                     let optionsArray = firstqueue[2];
                     let textColor = firstqueue[3];
