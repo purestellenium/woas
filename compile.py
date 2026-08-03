@@ -273,6 +273,10 @@ def compile_game_from_file(filepath):
         <title>%s</title>
 %s
         <style>
+            * {
+            user-select: none;
+            }
+
             body,
             html {
                 margin: 0;
@@ -397,7 +401,7 @@ def compile_game_from_file(filepath):
                 if (firstqueue[0] == "text") {
                     const text = document.createElement("p");
 
-                    text.textContent = firstqueue[1];
+                    text.innerHTML = firstqueue[1];
                     text.className = firstqueue[2];
                     text.style.color = firstqueue[3] ?? currentColor;
                     text.style.fontFamily = firstqueue[4] ?? currentFont;

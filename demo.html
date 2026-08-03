@@ -4,6 +4,10 @@
         <title>yuri</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Copse&amp;display=swap">
         <style>
+            * {
+            user-select: none;
+            }
+
             body,
             html {
                 margin: 0;
@@ -110,7 +114,7 @@
         <script>
             const canvas = document.getElementById("canvas");
             let queue = 
-        [["font", "Copse"], ["bg", "#001236"], ["color", "#fcffbd"], ["text", "press space to start", "l center vcenter centeralign", "white", "monospace", false], ["music", "play", "https://opengameart.org/sites/default/files/amb_rain2_0.mp3"], ["text", "It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type.", "m centeralign vcenter", null, null, false], ["text", "All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop.", "m vcenter centeralign", null, null, false], ["text", "Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens.", "m vcenter centeralign", null, null, false], ["music", "play", "https://opengameart.org/sites/default/files/under_the_rain_-_migfus20.mp3"], ["text", "...a girl rushes through the door, soaking wet.", "", null, null, false], ["text", "She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath.", "", null, null, true], ["text", "Finally recovering, she looks up at you, and you see her face.", "", null, null, true], ["text", "It's your crush.", "xl center vcenter centeralign", "#ffb6c1", null, true], ["text", "\"Hey there, barista girl!\" she says, smiling at you.", "", null, null, false], ["text", "Before you can even respond, she's already leaned over the counter, yapping on about how she got here.", "", null, null, true], ["text", "It's part of what you like about her. She talks more, so you don't have to.", "", null, null, true], ["text", "\"Say, I'm... actually a little cold from the rain. Don't suppose you've got anything for that?\"", "", null, null, false]];
+        [["font", "Copse"], ["bg", "#001236"], ["color", "#fcffbd"], ["text", "press space to start", "l center vcenter centeralign", "white", "monospace", false], ["music", "play", "https://opengameart.org/sites/default/files/amb_rain2_0.mp3"], ["text", "It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type.", "m centeralign vcenter", null, null, false], ["text", "All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop.", "m vcenter centeralign", null, null, false], ["text", "Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens.", "m vcenter centeralign", null, null, false], ["music", "play", "https://opengameart.org/sites/default/files/under_the_rain_-_migfus20.mp3"], ["text", "...a girl rushes through the door, soaking wet.", "", null, null, false], ["text", "She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath.", "", null, null, true], ["text", "Finally recovering, she looks up at you, and you see her face.", "", null, null, true], ["text", "It's your crush.", "xl center vcenter centeralign", "#f5a9b8", null, true], ["text", "\"Hey there, barista girl!\" she says, smiling at you.", "", "#f5a9b8", null, false], ["text", "Before you can even respond, she's already leaned over the counter, yapping on about how she got here.", "", null, null, true], ["text", "It's part of what you like about her. She talks more, so you don't have to.", "", null, null, true], ["text", "\"Say, I'm... actually a little cold from the rain. Don't suppose you've got anything for that?\"", "", "#f5a9b8", null, false], ["choice", "You smile. \"I've got just the thing.\"", [{"text": "Make her usual coffee", "jump": "coffee"}, {"text": "Give her your jacket", "jump": "jacket"}, {"text": "Walk her home", "jump": "walk"}], "#a58dca", null, true], ["jump", "coffee"], ["text", "\"Your usual order will warm you right up - let me make it for you!\"", "", "#a58dca", null, false], ["text", "\"Oh, my <i>usual</i> order?\" She lets out a little giggle. \"You know me so well.\"", "", "#f5a9b8", null, true], ["end", "coffee"], ["jump", "jacket"], ["end", "jacket"], ["jump", "walk"], ["end", "walk"]];
 
             let choiceActive = false;
             let currentFont = "Georgia";
@@ -127,7 +131,7 @@
                 if (firstqueue[0] == "text") {
                     const text = document.createElement("p");
 
-                    text.textContent = firstqueue[1];
+                    text.innerHTML = firstqueue[1];
                     text.className = firstqueue[2];
                     text.style.color = firstqueue[3] ?? currentColor;
                     text.style.fontFamily = firstqueue[4] ?? currentFont;
@@ -168,6 +172,7 @@
                     let promptText = firstqueue[1];
                     let optionsArray = firstqueue[2];
                     let textColor = firstqueue[3] ?? currentColor;
+                    let textFont = firstqueue[4] ?? currentFont;
 
                     let container = document.createElement("div");
                     container.className = "choice-container";
@@ -176,7 +181,7 @@
                     promptParagraph.className = "l center";
                     promptParagraph.innerText = promptText;
                     promptParagraph.style.color = textColor;
-                    promptParagraph.style.fontFamily = currentFont;
+                    promptParagraph.style.fontFamily = textFont;
                     container.appendChild(promptParagraph);
 
                     let choiceDiv = document.createElement("div");
@@ -187,7 +192,7 @@
                         optionButton.className = "m";
                         optionButton.innerText = option.text;
                         optionButton.style.color = textColor;
-                        optionButton.style.fontFamily = currentFont;
+                        optionButton.style.fontFamily = textFont;
 
                         optionButton.addEventListener("click", function (e) {
                             e.stopPropagation();
@@ -214,7 +219,13 @@
                     });
 
                     container.appendChild(choiceDiv);
-                    canvas.replaceChildren(container);
+
+                    if (firstqueue[5]) {
+                        canvas.appendChild(container);
+                    } else {
+                        canvas.replaceChildren(container);
+                    }
+
                     return;
                 } else if (firstqueue[0] == "jump") {
                     while (

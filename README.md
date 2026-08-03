@@ -86,6 +86,7 @@ text must be wrapped in double quotes (escaped quotes like `\"` inside these quo
 - format: "Text" classes / color font persist
 - use `null` in the color slot to use the default color while still defining a font.
 - `persist` is `true` or `false` (defaults to `false`, clearing the screen like normal). to set it without changing the font, use `null` in the font slot - `persist` is only read when a font (or `null`) comes before it.
+- text supports inline html tags (like `<i>` or `<b>`) - they'll actually render, not just show up as plain text. if you want to display a literal `<` or `>` instead, escape it as `&lt;` or `&gt;`.
 
 ```text
 "You wake up in a dark room." s center vcenter
@@ -93,6 +94,7 @@ text must be wrapped in double quotes (escaped quotes like `\"` inside these quo
 "A ghostly whisper..." m right / null "Times New Roman"
 "This stays on screen..." m left / null null true
 "...while this appears alongside it." m right / null null true
+"\"This dialogue has <i>italic</i> and <strong>bold</strong> formatting!\"" / pink
 ```
 
 available classes:

@@ -16,10 +16,23 @@ music play https://opengameart.org/sites/default/files/under_the_rain_-_migfus20
 "...a girl rushes through the door, soaking wet."
 "She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath." / null null true
 "Finally recovering, she looks up at you, and you see her face." / null null true
-"It's your crush." xl center vcenter centeralign / #ffb6c1 null true
+"It's your crush." xl center vcenter centeralign / #f5a9b8 null true
 
-"\"Hey there, barista girl!\" she says, smiling at you."
+"\"Hey there, barista girl!\" she says, smiling at you." / #f5a9b8
 "Before you can even respond, she's already leaned over the counter, yapping on about how she got here." / null null true
 "It's part of what you like about her. She talks more, so you don't have to." / null null true
 
-"\"Say, I'm... actually a little cold from the rain. Don't suppose you've got anything for that?\""
+"\"Say, I'm... actually a little cold from the rain. Don't suppose you've got anything for that?\"" / #f5a9b8
+choice "You smile. \"I've got just the thing.\"" / "Make her usual coffee" coffee "Give her your jacket" jacket "Walk her home" walk / #a58dca null true
+
+jump coffee
+"\"Your usual order will warm you right up - let me make it for you!\"" / #a58dca
+"\"Oh, my <i>usual</i> order?\" She lets out a little giggle. \"You know me so well.\"" / #f5a9b8 null true
+
+end coffee
+
+jump jacket
+end jacket
+
+jump walk
+end walk
