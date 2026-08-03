@@ -2,7 +2,7 @@
 music play nyan_cat.mp3
 "welcome" xl rightalign left
 music pause
-"this is the first text" l center vcenter centeralign / #ff0000 sans-serif
+"this is the first text" l vcenter center centeralign / #ff0000 sans-serif
 bg gray
 music play
 "and the second text is this" m right leftalign bottom / null monospace

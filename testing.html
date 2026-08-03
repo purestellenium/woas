@@ -29,25 +29,7 @@
                 flex-direction: column;
             }
 
-            .choice {
-                display: flex;
-                justify-content: center;
-                gap: 7.5cqw;
-            }
-
-            .choice p {
-                cursor: pointer;
-            }
-
-            .choice-container {
-                display: flex;
-                flex-direction: column;
-                margin-top: auto;
-                margin-bottom: auto;
-            }
-
-            p,
-            a {
+            p {
                 font-family: Georgia;
                 margin: 2cqw;
             }
@@ -111,40 +93,34 @@
         <script>
             const canvas = document.getElementById("canvas");
             let queue = [
+                ["text", "space to start", "xl center vcenter", "black", null],
+                ["music", "play", "nyan_cat.mp3"],
+                ["text", "welcome", "xl rightalign left", null, null],
+                ["music", "pause"],
                 [
-                    "choice",
-                    "which vial to take?",
-                    [
-                        {
-                            text: "estrogen",
-                            jump: "estrogen",
-                        },
-                        {
-                            text: "furry elixir",
-                            jump: "furry",
-                        },
-                        {
-                            text: "gay juice",
-                            jump: "gay",
-                        },
-                    ],
-                    "royalblue",
+                    "text",
+                    "this is the first text",
+                    "l vcenter center centeralign",
+                    "#ff0000",
+                    "sans-serif",
+                ],
+                ["bg", "gray"],
+                ["music", "play"],
+                [
+                    "text",
+                    "and the second text is this",
+                    "m right leftalign bottom",
+                    null,
+                    "monospace",
                 ],
             ];
 
-            let choiceActive = false;
             let currentFont = "Georgia";
             let currentColor = "blue";
             let music = new Audio();
 
             function doFirstQueue() {
                 let firstqueue = queue[0];
-
-                if (!firstqueue) {
-                    canvas.replaceChildren(); // clear canvas on game end, might remove later
-                    return;
-                }
-
                 if (firstqueue[0] == "text") {
                     const text = document.createElement("p");
 
@@ -176,56 +152,6 @@
                     queue.shift();
                     doFirstQueue();
                     return;
-                } else if (firstqueue[0] == "choice") {
-                    choiceActive = true;
-                    // create choice container
-
-                    let promptText = firstqueue[1];
-                    let optionsArray = firstqueue[2];
-                    let textColor = firstqueue[3];
-
-                    let container = document.createElement("div");
-                    container.className = "choice-container";
-
-                    let promptParagraph = document.createElement("p");
-                    promptParagraph.className = "l center";
-                    promptParagraph.innerText = promptText;
-                    if (textColor) {
-                        promptParagraph.style.color = textColor;
-                    }
-                    container.appendChild(promptParagraph);
-
-                    let choiceDiv = document.createElement("div");
-                    choiceDiv.className = "choice";
-
-                    optionsArray.forEach((option) => {
-                        let optionButton = document.createElement("p");
-                        optionButton.className = "m";
-                        optionButton.innerText = option.text;
-
-                        if (textColor) {
-                            optionButton.style.color = textColor;
-                        }
-
-                        optionButton.addEventListener("click", function (e) {
-                            // handle jump logic later
-                            console.log(
-                                "Clicked:",
-                                option.text,
-                                "| Jumping to:",
-                                option.jump
-                            );
-                            choiceActive = false;
-                            queue.shift(); // go to next queue item - remove later for proper jump logic
-                            doFirstQueue();
-                        });
-
-                        choiceDiv.appendChild(optionButton);
-                    });
-
-                    container.appendChild(choiceDiv);
-                    canvas.replaceChildren(container);
-                    return;
                 } else {
                     return;
                 }
@@ -236,7 +162,8 @@
             document.addEventListener("keydown", (event) => {
                 if (event.repeat) return;
 
-                if (event.code === "Space" && !choiceActive) {
+                if (event.code === "Space") {
+                    // pops queue and refreshes screen
                     queue.shift();
                     doFirstQueue();
                 }

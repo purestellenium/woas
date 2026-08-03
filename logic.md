@@ -48,3 +48,6 @@ or
 music stop
 or
 music pause
+
+choice:
+choice "choice question here" / "option 1" jump1 "option 2" jump2 "option 3" jump3 / color

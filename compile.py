@@ -29,6 +29,42 @@ def parse_text_line(line):
         "font_family": font_family
     }
 
+def parse_choice_line(line):
+    main_pattern = r'^choice\s+"((?:\\.|[^"\\])*)"\s*/\s*(.*)$'
+    main_match = re.match(main_pattern, line.strip())
+    
+    if not main_match:
+        raise SyntaxError(f"Choice line does not match required syntax: {line}")
+        
+    prompt = main_match.group(1).replace('\\"', '"')
+    rest_of_line = main_match.group(2)
+    
+    option_pattern = r'"((?:\\.|[^"\\])*)"\s+(\S+)'
+    parsed_options = []
+    
+    last_end = 0 
+    
+    for match in re.finditer(option_pattern, rest_of_line):
+        parsed_options.append({
+            "text": match.group(1).replace('\\"', '"'),
+            "jump": match.group(2)
+        })
+        last_end = match.end()
+        
+    remainder = rest_of_line[last_end:].strip()
+    color = None
+    
+    if remainder.startswith('/'):
+        color_string = remainder[1:].strip() # Remove the '/' and spaces
+        if color_string and color_string.lower() != "null":
+            color = color_string
+            
+    return {
+        "prompt": prompt,
+        "options": parsed_options,
+        "color": color
+    }
+
 def compile_game_from_file(filepath):
     html = '''<!doctype html>
     <html>
