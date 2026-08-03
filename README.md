@@ -106,7 +106,7 @@ font "Courier New"
 
 ### 6. music
 play/resume, pause, or stop a single looping audio track. this feature is designed for background music, so only one track can play at a time, and it will loop infinitely.
-note: audio files must be in the same folder as your compiled `.html` file, or linked by url in a `url(https://example.com)`.
+note: audio files must be in the same folder as your compiled `.html` file, or linked by url.
 
 ```text
 music play scary_ambience.mp3
