@@ -1,7 +1,5 @@
 import re, json, os, sys
 
-file_path = sys.argv[1].strip() if len(sys.argv) > 1 else input("Path to .woas file: ").strip()
-
 FONT_FILE_PATTERN = re.compile(r'\.(woff2?|ttf|otf|eot)(?:\?.*)?$', re.I)
 
 def format_error(line_number, source, reason):
@@ -562,9 +560,12 @@ def compile_game_from_file(filepath):
     except Exception as e:
         print(f"Game failed to compile: {e}")
 
-if not file_path.endswith(".woas"):
-    print("Error: File must be a .woas file!")
-elif not os.path.isfile(file_path):
-    print("Error: File does not exist!")
-else:
-    compile_game_from_file(file_path)
+if __name__ == "__main__":
+    file_path = sys.argv[1].strip() if len(sys.argv) > 1 else input("Path to .woas file: ").strip()
+
+    if not file_path.endswith(".woas"):
+        print("Error: File must be a .woas file!")
+    elif not os.path.isfile(file_path):
+        print("Error: File does not exist!")
+    else:
+        compile_game_from_file(file_path)

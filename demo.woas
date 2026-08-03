@@ -1,4 +1,9 @@
 title "yuri"
 import https://fonts.googleapis.com/css2?family=Copse&display=swap
 font "Copse"
-""
+bg #001236
+color #fcffbd
+"It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type." m vcenter
+"All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop." m vcenter
+"Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens." m vcenter
+"It's your crush." xl center vcenter / #ffb6c1
