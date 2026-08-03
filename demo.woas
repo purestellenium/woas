@@ -1,5 +1,4 @@
-# initial 
-title "yuri"
+title "my barista girl"
 import https://fonts.googleapis.com/css2?family=Copse&display=swap
 font "Copse"
 bg #001236
@@ -28,11 +27,72 @@ choice "You smile. \"I've got just the thing.\"" / "Make her usual coffee" coffe
 jump coffee
 "\"Your usual order will warm you right up - let me make it for you!\"" / #a58dca
 "\"Oh, my <i>usual</i> order?\" She lets out a little giggle. \"You know me so well.\"" / #f5a9b8 null true
-
+"As you go to hand the coffee to her, your hands touch for a moment, startling you. You rush to pull your hand back, but knock over the coffee..." / null null true
+"<mark style='color:#fcffbd;background-color:#38220f;'>...all over her shirt.</mark>" / null null true
+"\"Oh my god, I'm so sorry!!\" you stammer, frantically grabbing napkins." / #a58dca null
+"She just laughs, reaching across the puddle to gently grab your hand again." / null null true
+"\"It's okay,\" she smiles. \"I needed to dry myself off anyways. Mind giving me a hand?\"" / #f5a9b8 null true
+"\"Ah- of course!\" You rush to help her dry her shirt, her hand on top of yours." / #a58dca
+"\"Er, do you want my jacket? Here, take it and warm up next to the heater.\"" / #a58dca null true
+skip jacket2
 end coffee
 
 jump jacket
+"\"Here, I'll give you my jacket, and you can warm up next to the heater.\"" / #a58dca
+skip jacket2
+
+jump jacket2
+"Her eyes light up as she takes it. \"Are you sure? It's going to be huge on me.\"" / #f5a9b8 null true
+"\"That's the point,\" you mumble, feeling your cheeks burn." / #a58dca null true
+"She slips it on. The sleeves completely swallow her hands. It is the cutest thing you've ever seen."
+"\"It still smells like coffee... and you,\" she whispers, hiding a very soft blush in the oversized collar." / #f5a9b8 null true
+end jacket2
+
+"You and her are the only people in the cafe left, sitting by the heater, just chatting about each others' interests for about an hour. At some point, she puts her head on your shoulder, and you don't really want to move it."
+"After a while, you realize it's closing time, and leave her side to close up shop." / null null true
+"\"I guess it's goodbye for today then,\" she says, in an almost disappointed tone. \"I'll just have to see you whenever I see you next.\"" / #f5a9b8 null true
+choice "\"Wait, I-\"" / "Kiss her goodbye" kiss "Offer to walk her home" walk2 / #a58dca
+
 end jacket
 
+jump kiss
+"You grab her hand before she can reach the door."
+"She turns around, surprised, and before your brain can catch up with your heart, you lean in." / null null true
+"And so does she." / null null true
+"It's soft, warm, and tastes faintly of rain and espresso."
+"When you pull back, her face is entirely red. \"...I guess then, I'll see you tomorrow, my barista girl. Good night~\"" / #f5a9b8 null true
+"Before you can react, she's already out the door, into the rainy night. Still in your hoodie. You suspect you'll get it back later anyhow."
+end kiss
+
+jump walk2
+"\"I can walk you home! Under my umbrella.\"" / #a58dca
+skip cwalker
+end walk2
+
 jump walk
+"\"My shift is over. How about I walk you home under my umbrella?\"" / #a58dca
+skip cwalker
 end walk
+
+jump cwalker
+"She blinks, surprised, before a bright smile takes over her face." / null null true
+"\"I would love that,\" she says softly." / #f5a9b8 null true
+"You lock up the shop and step out into the cold. The umbrella is just a little too small for two people."
+"To stay dry, she wraps her arm around your waist and pulls you close." / null null true
+"The rain is freezing, but walking next to her, you've never felt warmer." / null null true
+skip home
+end cwalker
+
+jump home
+"Eventually, the two of you arrive at the front steps of her apartment building."
+"The porch awning shields you from the downpour, allowing you to finally close the umbrella." / null null true
+"She lingers in the doorway for a moment, keys in hand, looking back up at you with a soft expression." / null null true
+"\"Thank you for making sure I got back safe,\" she smiles." / #f5a9b8
+"She steps inside, but before the heavy door clicks shut, she peeks her head back out." / null null true
+"\"Goodnight, my barista girl.\"" / #f5a9b8 null true
+"You stand there dazed for a second, and when you snap back to reality, she's already gone inside." / null null true
+end home
+
+"\"My barista girl.\" That's what she called you. ...it has a nice ring to it." m center vcenter centeralign
+"You get your things in order, and head home. You can't wait to see her tomorrow."
+"Fin." xl center vcenter / white

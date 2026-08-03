@@ -390,6 +390,7 @@ def compile_game_from_file(filepath):
             let currentFont = "Georgia";
             let currentColor = "black";
             let music = new Audio();
+            music.volume = 0.5;
 
             function doFirstQueue() {
                 let firstqueue = queue[0];
@@ -425,6 +426,7 @@ def compile_game_from_file(filepath):
                         if (firstqueue[2]) {
                             music.pause();
                             music = new Audio(firstqueue[2]);
+                            music.volume = 0.5;
                         }
                         music.loop = true;
                         music.play();

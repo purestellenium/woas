@@ -66,6 +66,11 @@ download the `.zip` file labeled "linux" from the [latest release](https://githu
 ## controls
 players advance text by pressing space, clicking, or tapping anywhere on the game screen. choices are picked by clicking/tapping the option itself.
 
+## demo game
+i made a small demo game to show off the capabilities of the engine!
+play the demo here: https://purestellenium.github.io/my-barista-girl/
+and view the source code here: https://github.com/purestellenium/woas/blob/main/demo.woas
+
 ## syntax guide
 woas is read line-by-line, meaning each line is one command.
 woas completely ignores all newlines, so they are optional but usable if you want to make your `.woas` code more readable.
