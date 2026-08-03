@@ -115,4 +115,4 @@ music stop
 ```
 
 ## contributing
-pull requests open! if you have questions about contributing, you can message me on Slack @stellenium, and you can reach me at the email listed on my GitHub README.
+pull requests open! if you have questions about contributing, you can message me on the [Hack Club](https://hackclub.com/) [Slack](https://slack.hackclub.com/) @stellenium, and you can reach me at the email listed on my GitHub README.
