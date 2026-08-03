@@ -20,6 +20,7 @@ def parse_text_line(line, line_number):
     classes = ""
     color = None
     font_family = None
+    persist = False
 
     if '/' in remainder:
         classes_part, rest = remainder.split('/', 1)
@@ -29,7 +30,15 @@ def parse_text_line(line, line_number):
         if rest:
             color_font_match = re.match(r'^(\w+\([^)]*\)|\S+)(?:\s+(.*))?$', rest)
             color = color_font_match.group(1)
-            font_family = color_font_match.group(2)
+            font_and_persist = color_font_match.group(2)
+
+            if font_and_persist:
+                persist_match = re.match(r'^(.+)\s+(true|false)$', font_and_persist, re.I)
+                if persist_match:
+                    font_family = persist_match.group(1)
+                    persist = persist_match.group(2).lower() == "true"
+                else:
+                    font_family = font_and_persist
     else:
         classes = remainder.strip()
 
@@ -47,7 +56,8 @@ def parse_text_line(line, line_number):
         "text": text,
         "classes": classes,
         "color": color,
-        "font_family": font_family
+        "font_family": font_family,
+        "persist": persist
     }
 
 def parse_choice_line(line, line_number):
@@ -163,7 +173,8 @@ def compile_game_from_file(filepath):
                         data["text"],
                         data["classes"],
                         data["color"],
-                        data["font_family"]
+                        data["font_family"],
+                        data["persist"]
                     ])
                 elif line.startswith('choice '):
                     data = parse_choice_line(line, line_number)
@@ -367,7 +378,6 @@ def compile_game_from_file(filepath):
                 let firstqueue = queue[0];
 
                 if (!firstqueue) {
-                    canvas.replaceChildren();
                     return;
                 }
 
@@ -378,7 +388,13 @@ def compile_game_from_file(filepath):
                     text.className = firstqueue[2];
                     text.style.color = firstqueue[3] ?? currentColor;
                     text.style.fontFamily = firstqueue[4] ?? currentFont;
-                    canvas.replaceChildren(text);
+
+                    if (firstqueue[5]) {
+                        canvas.appendChild(text);
+                    } else {
+                        canvas.replaceChildren(text);
+                    }
+
                     return;
                 } else if (firstqueue[0] == "bg") {
                     canvas.style.background = firstqueue[1];

@@ -80,16 +80,19 @@ title "My Awesome Game"
 ```
 
 ### 2. displaying text
-you can display up to one piece of text on the screen at any moment (not counting choice screens).
-text must be wrapped in double quotes (escaped quotes like `\"` inside these quotes are supported). you can optionally add css classes to style this text, and specify a custom color and font after the `/` separator.
+by default, only one piece of text is shown on the screen at a time (not counting choice screens) - each new text command replaces the last. you can make a piece of text persist instead, which stacks it on screen alongside whatever comes after it, rather than clearing it away.
+text must be wrapped in double quotes (escaped quotes like `\"` inside these quotes are supported). you can optionally add css classes to style this text, and specify a custom color, font, and whether it persists, after the `/` separator.
 
-- format: "Text" classes / color font
+- format: "Text" classes / color font persist
 - use `null` in the color slot to use the default color while still defining a font.
+- `persist` is `true` or `false` (defaults to `false`, clearing the screen like normal). to set it without changing the font, use `null` in the font slot - `persist` is only read when a font (or `null`) comes before it.
 
 ```text
 "You wake up in a dark room." s center vcenter
 "A loud noise startles you!" xl center / red
 "A ghostly whisper..." m right / null "Times New Roman"
+"This stays on screen..." m left / null null true
+"...while this appears alongside it." m right / null null true
 ```
 
 available classes:
@@ -199,7 +202,11 @@ font "Roboto"
 play/resume, pause, or stop a single looping audio track. this feature is designed for background music, so only one track can play at a time, and it will loop infinitely.
 note: audio files must be in the same folder as your compiled `.html` file, or linked by url.
 
+note: due to how web browsers process sound, you cannot have a music command before the first input from the user (click or keypress). you can get around this limitation by adding a "click to start game" text.
+
 ```text
+"press space to start" l center vcenter centeralign / white monospace
+
 music play scary_ambience.mp3
 music pause
 music stop

@@ -1,9 +1,20 @@
+# initial 
 title "yuri"
 import https://fonts.googleapis.com/css2?family=Copse&display=swap
 font "Copse"
 bg #001236
 color #fcffbd
+
+"press space to start" l center vcenter centeralign / white monospace
+
+music play https://opengameart.org/sites/default/files/amb_rain2_0.mp3
+
 "It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type." m vcenter
 "All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop." m vcenter
 "Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens." m vcenter
-"It's your crush." xl center vcenter / #ffb6c1
+music play https://opengameart.org/sites/default/files/under_the_rain_-_migfus20.mp3
+"...a girl rushes through the door, soaking wet." m
+"She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath." m / null null true
+"Finally recovering, she looks up at you, and you see her face." m / null null true
+"It's your crush." xl center vcenter centeralign / #ffb6c1 null true
+

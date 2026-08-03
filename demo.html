@@ -110,7 +110,7 @@
         <script>
             const canvas = document.getElementById("canvas");
             let queue = 
-        [["font", "Copse"], ["bg", "#001236"], ["color", "#fcffbd"], ["text", "It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type.", "m vcenter", null, null], ["text", "All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop.", "m vcenter", null, null], ["text", "Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens.", "m vcenter", null, null], ["text", "It's your crush.", "xl center vcenter", "#ffb6c1", null]];
+        [["font", "Copse"], ["bg", "#001236"], ["color", "#fcffbd"], ["text", "press space to start", "l center vcenter centeralign", "white", "monospace", false], ["music", "play", "https://opengameart.org/sites/default/files/amb_rain2_0.mp3"], ["text", "It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type.", "m vcenter", null, null, false], ["text", "All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop.", "m vcenter", null, null, false], ["text", "Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens.", "m vcenter", null, null, false], ["music", "play", "https://opengameart.org/sites/default/files/under_the_rain_-_migfus20.mp3"], ["text", "...a girl rushes through the door, soaking wet.", "m", null, null, false], ["text", "She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath.", "m", null, null, true], ["text", "Finally recovering, she looks up at you, and you see her face.", "m", null, null, true], ["text", "It's your crush.", "xl center vcenter centeralign", "#ffb6c1", null, true]];
 
             let choiceActive = false;
             let currentFont = "Georgia";
@@ -132,7 +132,13 @@
                     text.className = firstqueue[2];
                     text.style.color = firstqueue[3] ?? currentColor;
                     text.style.fontFamily = firstqueue[4] ?? currentFont;
-                    canvas.replaceChildren(text);
+
+                    if (firstqueue[5]) {
+                        canvas.appendChild(text);
+                    } else {
+                        canvas.replaceChildren(text);
+                    }
+
                     return;
                 } else if (firstqueue[0] == "bg") {
                     canvas.style.background = firstqueue[1];
