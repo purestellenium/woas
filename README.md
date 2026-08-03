@@ -23,6 +23,9 @@ i made it cause i ~~needed hours for horizons polaris~~ wanted an easy to use en
 i made a game in woas as a demo of the engine!
 [more details here once i actually make the game]
 
+## controls
+players advance text by pressing space, clicking, or tapping anywhere on the game screen. choices are picked by clicking/tapping the option itself.
+
 ## syntax guide
 woas is read line-by-line, meaning each line is one command.
 woas completely ignores all newlines, so they are optional but usable if you want to make your `.woas` code more readable.
@@ -41,13 +44,19 @@ you can display up to one piece of text on the screen at any moment (not countin
 text must be wrapped in double quotes (escaped quotes like `\"` inside these quotes are supported). you can optionally add css classes to style this text, and specify a custom color and font after the `/` separator.
 
 - format: "Text" classes / color font
-- use `null` in the font slot to use default color but still define a font.
+- use `null` in the color slot to use the default color while still defining a font.
 
 ```text
 "You wake up in a dark room." s center vcenter
 "A loud noise startles you!" xl center / red
 "A ghostly whisper..." m right / null "Times New Roman"
 ```
+
+available classes:
+- size: `s` `m` `l` `xl` `xxl`
+- vertical position: `vcenter` `bottom` (default is top-aligned)
+- horizontal position: `left` `center` `right`
+- text alignment (for text that wraps to multiple lines): `centeralign` `rightalign`
 
 ### 3. choices and branching
 ask a question and display choices for the user. when the player clicks a choice linked to a jump marked by an id, the engine will skip to the next "jump [id]" command. the engine avoids hitting the other branches by skipping over jumps (by going to their end command) that aren't triggered specifically by a user-made choice.
@@ -104,7 +113,27 @@ color white
 font "Courier New"
 ```
 
-### 6. music
+### 6. importing custom fonts
+import a custom font file so you can use it anywhere a font is accepted (the `font` command, or a text line's font slot). give the font a name to import it under - this name is just a label, it doesn't need to match the file name.
+note: like background images and music, font files must be in the same folder as your compiled `.html` file, or linked by url.
+
+```text
+import "Handwriting" my_font.woff2
+font "Handwriting"
+"This is written in my custom font." m vcenter / null "Handwriting"
+"So is this, since my font is now the default." m vcenter
+
+"But this text overrides it for just one line." m vcenter / null monospace
+```
+
+you can also paste a google fonts stylesheet link directly - the compiler notices it isn't a font file and links it in the page's head instead, letting the browser handle the loading. since the stylesheet already defines its own font names, you don't (and can't) give it one here - just make sure the name you use afterwards matches the family name from the link exactly.
+
+```text
+import https://fonts.googleapis.com/css2?family=Roboto&display=swap
+font "Roboto"
+```
+
+### 7. music
 play/resume, pause, or stop a single looping audio track. this feature is designed for background music, so only one track can play at a time, and it will loop infinitely.
 note: audio files must be in the same folder as your compiled `.html` file, or linked by url.
 

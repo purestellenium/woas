@@ -63,3 +63,14 @@ font font-family
 
 color (set default font color):
 color color
+
+import (load a custom font file, usable anywhere a font is accepted):
+import "font name" pathtofile.woff2
+
+import (link a font stylesheet like google fonts instead - no name, since the stylesheet already names its own fonts):
+import https://fonts.googleapis.com/css2?family=Roboto&display=swap
+
+SYNTAX IN HTML
+
+import (font file only - stylesheet imports become a <link> in <head> instead):
+["import", "font name", "pathtofile.woff2"]
