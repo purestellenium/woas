@@ -104,6 +104,10 @@ available classes:
 ### 3. choices and branching
 ask a question and display choices for the user. when the player clicks a choice linked to a jump marked by an id, the engine will skip to the next "jump [id]" command. the engine avoids hitting the other branches by skipping over jumps (by going to their end command) that aren't triggered specifically by a user-made choice.
 
+after the last option, a choice can also take `/ color font persist` - same rules as [displaying text](#2-displaying-text): `null` for defaults, and `persist` needs an explicit font (or `null`) before it to be read.
+
+warning: unlike persisted text, a persisted choice's buttons stay in the DOM and stay clickable even after the player has moved past them - their click handlers don't get removed, so clicking an old option can still trigger its jump. use `persist` on choices carefully.
+
 format:
 - a jump command declaring the jump and its id (which cannot have spaces)
 - any commands that should (and will) only be executed if a choice is picked that points to this jump

@@ -8,6 +8,38 @@ def format_error(line_number, source, reason):
 def raise_syntax_error(line_number, line, reason):
     raise SyntaxError(format_error(line_number, line, reason))
 
+def parse_color_font_persist(rest):
+    color = None
+    font_family = None
+    persist = False
+
+    rest = rest.strip()
+
+    if rest:
+        color_font_match = re.match(r'^(\w+\([^)]*\)|\S+)(?:\s+(.*))?$', rest)
+        color = color_font_match.group(1)
+        font_and_persist = color_font_match.group(2)
+
+        if font_and_persist:
+            persist_match = re.match(r'^(.+)\s+(true|false)$', font_and_persist, re.I)
+            if persist_match:
+                font_family = persist_match.group(1)
+                persist = persist_match.group(2).lower() == "true"
+            else:
+                font_family = font_and_persist
+
+    if color is None or color.lower() == "null":
+        color = None
+
+    if font_family is None or font_family.lower() == "null":
+        font_family = None
+    else:
+        quoted_font = re.match(r'^"((?:\\.|[^"\\])*)"$', font_family)
+        if quoted_font:
+            font_family = quoted_font.group(1).replace('\\"', '"')
+
+    return color, font_family, persist
+
 def parse_text_line(line, line_number):
     text_match = re.match(r'^"((?:\\.|[^"\\])*)"\s*(.*)$', line.strip())
 
@@ -25,32 +57,9 @@ def parse_text_line(line, line_number):
     if '/' in remainder:
         classes_part, rest = remainder.split('/', 1)
         classes = classes_part.strip()
-        rest = rest.strip()
-
-        if rest:
-            color_font_match = re.match(r'^(\w+\([^)]*\)|\S+)(?:\s+(.*))?$', rest)
-            color = color_font_match.group(1)
-            font_and_persist = color_font_match.group(2)
-
-            if font_and_persist:
-                persist_match = re.match(r'^(.+)\s+(true|false)$', font_and_persist, re.I)
-                if persist_match:
-                    font_family = persist_match.group(1)
-                    persist = persist_match.group(2).lower() == "true"
-                else:
-                    font_family = font_and_persist
+        color, font_family, persist = parse_color_font_persist(rest)
     else:
         classes = remainder.strip()
-
-    if color is None or color.lower() == "null":
-        color = None
-
-    if font_family is None or font_family.lower() == "null":
-        font_family = None
-    else:
-        quoted_font = re.match(r'^"((?:\\.|[^"\\])*)"$', font_family)
-        if quoted_font:
-            font_family = quoted_font.group(1).replace('\\"', '"')
 
     return {
         "text": text,
@@ -65,7 +74,7 @@ def parse_choice_line(line, line_number):
     main_match = re.match(main_pattern, line.strip())
 
     if not main_match:
-        raise_syntax_error(line_number, line, 'Choice line does not match \'choice "prompt" / "option text" jump_id ... / color\'')
+        raise_syntax_error(line_number, line, 'Choice line does not match \'choice "prompt" / "option text" jump_id ... / color font persist\'')
 
     prompt = main_match.group(1).replace('\\"', '"')
     rest_of_line = main_match.group(2)
@@ -84,16 +93,18 @@ def parse_choice_line(line, line_number):
         
     remainder = rest_of_line[last_end:].strip()
     color = None
-    
+    font_family = None
+    persist = False
+
     if remainder.startswith('/'):
-        color_string = remainder[1:].strip()
-        if color_string and color_string.lower() != "null":
-            color = color_string
-            
+        color, font_family, persist = parse_color_font_persist(remainder[1:])
+
     return {
         "prompt": prompt,
         "options": parsed_options,
-        "color": color
+        "color": color,
+        "font_family": font_family,
+        "persist": persist
     }
 
 def parse_import_line(line, line_number):
@@ -182,7 +193,9 @@ def compile_game_from_file(filepath):
                         "choice",
                         data["prompt"],
                         data["options"],
-                        data["color"]
+                        data["color"],
+                        data["font_family"],
+                        data["persist"]
                     ])
                 elif line.startswith('title '):
                     match = re.match(r'^title\s+"((?:\\.|[^"\\])*)"', line.strip())
@@ -425,6 +438,7 @@ def compile_game_from_file(filepath):
                     let promptText = firstqueue[1];
                     let optionsArray = firstqueue[2];
                     let textColor = firstqueue[3] ?? currentColor;
+                    let textFont = firstqueue[4] ?? currentFont;
 
                     let container = document.createElement("div");
                     container.className = "choice-container";
@@ -433,7 +447,7 @@ def compile_game_from_file(filepath):
                     promptParagraph.className = "l center";
                     promptParagraph.innerText = promptText;
                     promptParagraph.style.color = textColor;
-                    promptParagraph.style.fontFamily = currentFont;
+                    promptParagraph.style.fontFamily = textFont;
                     container.appendChild(promptParagraph);
 
                     let choiceDiv = document.createElement("div");
@@ -444,7 +458,7 @@ def compile_game_from_file(filepath):
                         optionButton.className = "m";
                         optionButton.innerText = option.text;
                         optionButton.style.color = textColor;
-                        optionButton.style.fontFamily = currentFont;
+                        optionButton.style.fontFamily = textFont;
 
                         optionButton.addEventListener("click", function (e) {
                             e.stopPropagation();
@@ -471,7 +485,13 @@ def compile_game_from_file(filepath):
                     });
 
                     container.appendChild(choiceDiv);
-                    canvas.replaceChildren(container);
+
+                    if (firstqueue[5]) {
+                        canvas.appendChild(container);
+                    } else {
+                        canvas.replaceChildren(container);
+                    }
+
                     return;
                 } else if (firstqueue[0] == "jump") {
                     while (

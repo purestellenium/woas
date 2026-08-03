@@ -9,12 +9,17 @@ color #fcffbd
 
 music play https://opengameart.org/sites/default/files/amb_rain2_0.mp3
 
-"It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type." m vcenter
-"All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop." m vcenter
-"Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens." m vcenter
+"It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type." m centeralign vcenter
+"All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop." m vcenter centeralign
+"Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens." m vcenter centeralign
 music play https://opengameart.org/sites/default/files/under_the_rain_-_migfus20.mp3
-"...a girl rushes through the door, soaking wet." m
-"She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath." m / null null true
-"Finally recovering, she looks up at you, and you see her face." m / null null true
+"...a girl rushes through the door, soaking wet."
+"She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath." / null null true
+"Finally recovering, she looks up at you, and you see her face." / null null true
 "It's your crush." xl center vcenter centeralign / #ffb6c1 null true
 
+"\"Hey there, barista girl!\" she says, smiling at you."
+"Before you can even respond, she's already leaned over the counter, yapping on about how she got here." / null null true
+"It's part of what you like about her. She talks more, so you don't have to." / null null true
+
+"\"Say, I'm... actually a little cold from the rain. Don't suppose you've got anything for that?\""

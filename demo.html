@@ -110,7 +110,7 @@
         <script>
             const canvas = document.getElementById("canvas");
             let queue = 
-        [["font", "Copse"], ["bg", "#001236"], ["color", "#fcffbd"], ["text", "press space to start", "l center vcenter centeralign", "white", "monospace", false], ["music", "play", "https://opengameart.org/sites/default/files/amb_rain2_0.mp3"], ["text", "It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type.", "m vcenter", null, null, false], ["text", "All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop.", "m vcenter", null, null, false], ["text", "Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens.", "m vcenter", null, null, false], ["music", "play", "https://opengameart.org/sites/default/files/under_the_rain_-_migfus20.mp3"], ["text", "...a girl rushes through the door, soaking wet.", "m", null, null, false], ["text", "She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath.", "m", null, null, true], ["text", "Finally recovering, she looks up at you, and you see her face.", "m", null, null, true], ["text", "It's your crush.", "xl center vcenter centeralign", "#ffb6c1", null, true]];
+        [["font", "Copse"], ["bg", "#001236"], ["color", "#fcffbd"], ["text", "press space to start", "l center vcenter centeralign", "white", "monospace", false], ["music", "play", "https://opengameart.org/sites/default/files/amb_rain2_0.mp3"], ["text", "It's almost closing at the coffee shop you work at, which means the few patrons you have left are the timid and quiet type.", "m centeralign vcenter", null, null, false], ["text", "All you can hear is the quiet but steady pitter-patter of the rain hitting the awning in front of the shop.", "m vcenter centeralign", null, null, false], ["text", "Suddenly, the bell above the door rings with vigor, and the rain gets louder as the door opens.", "m vcenter centeralign", null, null, false], ["music", "play", "https://opengameart.org/sites/default/files/under_the_rain_-_migfus20.mp3"], ["text", "...a girl rushes through the door, soaking wet.", "", null, null, false], ["text", "She stops, just in front of the doorway, with her hands on her knees, trying to catch her breath.", "", null, null, true], ["text", "Finally recovering, she looks up at you, and you see her face.", "", null, null, true], ["text", "It's your crush.", "xl center vcenter centeralign", "#ffb6c1", null, true], ["text", "\"Hey there, barista girl!\" she says, smiling at you.", "", null, null, false], ["text", "Before you can even respond, she's already leaned over the counter, yapping on about how she got here.", "", null, null, true], ["text", "It's part of what you like about her. She talks more, so you don't have to.", "", null, null, true], ["text", "\"Say, I'm... actually a little cold from the rain. Don't suppose you've got anything for that?\"", "", null, null, false]];
 
             let choiceActive = false;
             let currentFont = "Georgia";
@@ -121,7 +121,6 @@
                 let firstqueue = queue[0];
 
                 if (!firstqueue) {
-                    canvas.replaceChildren();
                     return;
                 }
 
