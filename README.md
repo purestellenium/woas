@@ -4,6 +4,27 @@
 
 a domain-specific language used to make text-based games that outputs entirely in HTML5.
 
+## table of contents
+- [uhh what did you even make?](#uhh-what-did-you-even-make)
+- [ts kinda useless, why did you build it?](#ts-kinda-useless-why-did-you-build-it)
+- [installation](#installation)
+  - [windows](#windows)
+  - [macos](#macos)
+  - [linux (not tested)](#linux-not-tested)
+- [quick start](#quick-start)
+- [controls](#controls)
+- [syntax guide](#syntax-guide)
+  - [1. game title](#1-game-title)
+  - [2. displaying text](#2-displaying-text)
+  - [3. choices and branching](#3-choices-and-branching)
+  - [4. skipping to a jump](#4-skipping-to-a-jump)
+  - [invisible commands](#invisible-commands)
+  - [5. background](#5-background)
+  - [6. global styling](#6-global-styling)
+  - [7. importing custom fonts](#7-importing-custom-fonts)
+  - [8. music](#8-music)
+- [contributing](#contributing)
+
 ## uhh what did you even make?
 i built:
 - woas language syntax: a semi-easy-to-use language to write text-based games in
