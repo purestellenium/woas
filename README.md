@@ -1,6 +1,6 @@
 # woas
 
-_"it's just Words On A Screen."_
+*"it's just Words On A Screen."*
 
 a domain-specific language used to make text-based games that outputs entirely in HTML5.
 
@@ -56,7 +56,7 @@ available classes:
 - size: `s` `m` `l` `xl` `xxl`
 - vertical position: `vcenter` `bottom` (default is top-aligned)
 - horizontal position: `left` `center` `right`
-- text alignment (for text that wraps to multiple lines): `centeralign` `rightalign`
+- text alignment (for text that wraps to multiple lines): `centeralign` `rightalign` (default is left-aligned)
 
 ### 3. choices and branching
 ask a question and display choices for the user. when the player clicks a choice linked to a jump marked by an id, the engine will skip to the next "jump [id]" command. the engine avoids hitting the other branches by skipping over jumps (by going to their end command) that aren't triggered specifically by a user-made choice.
@@ -90,10 +90,32 @@ jump path_right
 end path_right
 ```
 
+### 4. skipping to a jump
+jump straight to a `jump` command elsewhere in the file, without needing a choice to trigger it - useful for allowing users to access jumps outside of choices, merging branching paths, or simply just jumping to another place in the script.
+
+format: skip id
+
+note: like choices, a `skip` can only target a jump declared after itself.
+
+```text
+choice "What do you do first?" / "Rest by the fire" rest "Explore the cave" explore / royalblue
+
+jump rest
+"You rest by the fire, but you're too curious to sleep." m center vcenter
+skip explore
+end rest
+
+jump explore
+"You explore the cave and find a hidden passage." m center vcenter
+end explore
+
+"Eventually, you press onward." m center vcenter
+```
+
 ### invisible commands
 commands below run without stopping the queue, meaning they don't need an input to go to the next command.
 
-### 4. background
+### 5. background
 change the background to a color or image.
 works similarly to the css shorthand property "background".
 
@@ -104,7 +126,7 @@ bg rgb(255, 255, 255)
 bg my_image.png
 ```
 
-### 5. global styling
+### 6. global styling
 set the default font and colors, so you don't have to define them for every single text command.
 note: these aren't one time for the entire project; you can change these as you go. a usecase for this may be: you enter a new environment that will have a new default font color and font.
 
@@ -113,7 +135,7 @@ color white
 font "Courier New"
 ```
 
-### 6. importing custom fonts
+### 7. importing custom fonts
 import a custom font file so you can use it anywhere a font is accepted (the `font` command, or a text line's font slot). give the font a name to import it under - this name is just a label, it doesn't need to match the file name.
 note: like background images and music, font files must be in the same folder as your compiled `.html` file, or linked by url.
 
@@ -133,7 +155,7 @@ import https://fonts.googleapis.com/css2?family=Roboto&display=swap
 font "Roboto"
 ```
 
-### 7. music
+### 8. music
 play/resume, pause, or stop a single looping audio track. this feature is designed for background music, so only one track can play at a time, and it will loop infinitely.
 note: audio files must be in the same folder as your compiled `.html` file, or linked by url.
 

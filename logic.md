@@ -34,6 +34,9 @@ or
 jumps:
 ["jump", "jumpid"]
 
+skip (jumps straight to a "jump", same as clicking a choice that points there):
+["skip", "jumpid"]
+
 SYNTAX IN WOAS
 
 text:
@@ -57,6 +60,9 @@ jump jumpid
 
 when a jump ends:
 end jumpid
+
+skip straight to a jump, without needing a choice to trigger it:
+skip jumpid
 
 font (set default font-family):
 font font-family

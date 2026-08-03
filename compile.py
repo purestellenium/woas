@@ -128,20 +128,21 @@ def validate_jumps(queue, queue_lines, queue_source):
                 f'Invalid jump: "jump {jump_id}" has no matching "end {jump_id}" declared after it'
             ))
 
+    def check_target(index, jump_id, description):
+        jump_index = jump_positions.get(jump_id)
+        if jump_index is None or jump_index <= index:
+            raise SyntaxError(format_error(
+                queue_lines[index],
+                queue_source[index],
+                f'Invalid jump: {description} points to jump "{jump_id}", but no "jump {jump_id}" is declared after this line'
+            ))
+
     for index, entry in enumerate(queue):
-        if entry[0] != "choice":
-            continue
-
-        for option in entry[2]:
-            jump_id = option["jump"]
-            jump_index = jump_positions.get(jump_id)
-
-            if jump_index is None or jump_index <= index:
-                raise SyntaxError(format_error(
-                    queue_lines[index],
-                    queue_source[index],
-                    f'Invalid jump: choice option "{option["text"]}" points to jump "{jump_id}", but no "jump {jump_id}" is declared after this choice'
-                ))
+        if entry[0] == "choice":
+            for option in entry[2]:
+                check_target(index, option["jump"], f'choice option "{option["text"]}"')
+        elif entry[0] == "skip":
+            check_target(index, entry[1], f'"skip {entry[1]}"')
 
 def compile_game_from_file(filepath):
     try:
@@ -227,6 +228,11 @@ def compile_game_from_file(filepath):
                     if re.search(r'\s', end_id):
                         raise_syntax_error(line_number, line, f'End id "{end_id}" cannot contain spaces')
                     queue.append(["end", end_id])
+                elif line.startswith('skip '):
+                    skip_id = line[5:].strip()
+                    if re.search(r'\s', skip_id):
+                        raise_syntax_error(line_number, line, f'Skip id "{skip_id}" cannot contain spaces')
+                    queue.append(["skip", skip_id])
                 else:
                     raise_syntax_error(line_number, line, f'Unknown command "{line.split()[0]}"')
 
@@ -458,6 +464,23 @@ def compile_game_from_file(filepath):
                         queue.length > 0 &&
                         !(
                             queue[0][0] === "end" &&
+                            queue[0][1] === firstqueue[1]
+                        )
+                    ) {
+                        queue.shift();
+                    }
+
+                    if (queue.length > 0) {
+                        queue.shift();
+                        doFirstQueue();
+                    }
+
+                    return;
+                } else if (firstqueue[0] == "skip") {
+                    while (
+                        queue.length > 0 &&
+                        !(
+                            queue[0][0] === "jump" &&
                             queue[0][1] === firstqueue[1]
                         )
                     ) {
