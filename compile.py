@@ -155,7 +155,7 @@ def compile_game_from_file(filepath):
             queue_source = []
 
             for line_number, line in enumerate(file, start=1):
-                if not line.strip():
+                if not line.strip() or line[0] == "#":
                     continue
 
                 if line[0] == '"':

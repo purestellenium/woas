@@ -205,5 +205,18 @@ music pause
 music stop
 ```
 
+### 9. comments
+you can add comment lines to your woas code, and the compiler will ignore it. use this feature to make notes to yourself, section things off, etc!
+
+note: 
+
+```text
+"Woas. This is valid a woas text command." m center
+
+# This is a comment that the compiler will ignore!
+
+"Woas. This is also valid." xl right bottom rightalign / royalblue
+```
+
 ## contributing
 pull requests open! if you have questions about contributing, you can message me on the [Hack Club](https://hackclub.com/) [Slack](https://slack.hackclub.com/) @stellenium, and you can reach me at the email listed on my GitHub README.
