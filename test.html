@@ -111,6 +111,26 @@
         <script>
             const canvas = document.getElementById("canvas");
             let queue = [
+                ["text", "space to start", "xl center vcenter", "black"],
+                ["music", "play", "nyan_cat.mp3"],
+                ["text", "welcome", "xl rightalign left"],
+                ["music", "pause"],
+                [
+                    "text",
+                    "this is the first text",
+                    "l center vcenter centeralign",
+                    "#ff0000",
+                    "sans-serif",
+                ],
+                ["bg", "gray"],
+                ["music", "play"],
+                [
+                    "text",
+                    "and the second text is this",
+                    "m right leftalign bottom",
+                    null,
+                    "monospace",
+                ],
                 [
                     "choice",
                     "which vial to take?",
@@ -130,6 +150,55 @@
                     ],
                     "royalblue",
                 ],
+                ["jump", "estrogen"],
+                [
+                    "text",
+                    "estrogen chosen",
+                    "l center vcenter centeralign",
+                    null,
+                    null,
+                ],
+                [
+                    "text",
+                    "you girl now",
+                    "l center vcenter centeralign",
+                    null,
+                    null,
+                ],
+                ["end", "estrogen"],
+                ["jump", "furry"],
+                [
+                    "text",
+                    "furry elixir chosen",
+                    "l center vcenter centeralign",
+                    null,
+                    null,
+                ],
+                [
+                    "text",
+                    "you grow cat ears and a tail! ^w^",
+                    "l center vcenter centeralign",
+                    null,
+                    null,
+                ],
+                ["end", "furry"],
+                ["jump", "gay"],
+                [
+                    "text",
+                    "gay juice chosen",
+                    "l center vcenter centeralign",
+                    null,
+                    null,
+                ],
+                [
+                    "text",
+                    "you gay now",
+                    "l center vcenter centeralign",
+                    null,
+                    null,
+                ],
+                ["end", "gay"],
+                ["text", "fin", "xl center vcenter", null, "monospace"],
             ];
 
             let choiceActive = false;
@@ -208,15 +277,21 @@
                         }
 
                         optionButton.addEventListener("click", function (e) {
-                            // handle jump logic later
-                            console.log(
-                                "Clicked:",
-                                option.text,
-                                "| Jumping to:",
-                                option.jump
-                            );
+                            while (
+                                queue.length > 0 &&
+                                !(
+                                    queue[0][0] === "jump" &&
+                                    queue[0][1] === option.jump
+                                )
+                            ) {
+                                queue.shift();
+                            }
+
+                            if (queue.length > 0) {
+                                queue.shift();
+                            }
+
                             choiceActive = false;
-                            queue.shift(); // go to next queue item - remove later for proper jump logic
                             doFirstQueue();
                         });
 
@@ -226,7 +301,26 @@
                     container.appendChild(choiceDiv);
                     canvas.replaceChildren(container);
                     return;
+                } else if (firstqueue[0] == "jump") {
+                    while (
+                        queue.length > 0 &&
+                        !(
+                            queue[0][0] === "end" &&
+                            queue[0][1] === firstqueue[1]
+                        )
+                    ) {
+                        queue.shift();
+                    }
+
+                    if (queue.length > 0) {
+                        queue.shift();
+                        doFirstQueue();
+                    }
+
+                    return;
                 } else {
+                    queue.shift();
+                    doFirstQueue();
                     return;
                 }
             }

@@ -6,3 +6,4 @@ music pause
 bg gray
 music play
 "and the second text is this" m right leftalign bottom / null monospace
+choice "which vial to take?" / "estrogen" estrogen "furry elixir" furry "gay juice" gay / royalblue 

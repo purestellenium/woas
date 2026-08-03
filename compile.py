@@ -177,7 +177,7 @@ def compile_game_from_file(filepath):
                     to_insert.append(data["font_family"])
                     queue.append(to_insert)
                 else:
-                    # bg, music case
+                    # bg, music, jump case
                     queue.append(line.split())
         # convert queue from array into string that can be put into js
         queue_json = json.dumps(queue)

@@ -34,6 +34,9 @@ or
 or
 ["music", "pause"]
 
+jumps:
+["jump", "jumpid"]
+
 SYNTAX IN WOAS
 
 text:
@@ -51,3 +54,9 @@ music pause
 
 choice:
 choice "choice question here" / "option 1" jump1 "option 2" jump2 "option 3" jump3 / color
+
+jumps:
+jump jumpid
+
+when a jump ends:
+end jumpid
