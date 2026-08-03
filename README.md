@@ -236,5 +236,9 @@ note:
 "Woas. This is also valid." xl right bottom rightalign / royalblue
 ```
 
+## ai declaration
+throughout the process of making this project, i used LLM models such as gemini and claude for very small bug fixes and the implementation of a few non-core features (for example the script that automatically compiles your `.woas` files upon saving them).
+most of the code for both the engine and the compiler were written by me, completely by hand.
+
 ## contributing
 pull requests open! if you have questions about contributing, you can message me on the [Hack Club](https://hackclub.com/) [Slack](https://slack.hackclub.com/) @stellenium, and you can reach me at the email listed on my GitHub README.
