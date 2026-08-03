@@ -13,15 +13,34 @@ i built:
 ## ts kinda useless, why did you build it?
 i made it cause i ~~needed hours for horizons polaris~~ wanted an easy to use engine to make story games/slideshows that are a bit more barebones than what renpy has to offer. i wanted to create a story-based game but the idea of having to use renpy and deal with all of the stuff to make it look nice (UI, character sprites, animations) and not like the default template overwhelmed me. woas is much more barebones and lets your story stand on its own two legs rather than bombarding you with tons of features you might not need that end up looking generic in the end.
 
+## installation
+if you have python installed, you can just download the `compile.py` script and run it to compile your `.woas` files.
+
+however, you can also use one of our prebuilt executables... because it's a unified db requirement.
+
+### windows
+download the `.exe` file from the [latest release](https://github.com/purestellenium/woas/releases/latest) and run it.
+
+### macos
+download the `.zip` file labeled "macos" from the [latest release](https://github.com/purestellenium/woas/releases/latest).
+
+there is a chance that macos will "quarantine" this executable, and not allow you to run it. in this case, follow these instructions to un-quarantine it:
+1. open terminal
+2. paste in `sudo xattr -rd com.apple.quarantine ` <- the trailing space is important
+3. drag and drop the unix executable file into the terminal (should cause a long file path to show up)
+4. run the command
+5. voila, now your executable is no longer quarantined!
+
+then, just run the executable.
+
+### linux (not tested)
+download the `.zip` file labeled "linux" from the [latest release](https://github.com/purestellenium/woas/releases/latest) and run it.
+
 ## quick start
 1. create a plaintext file with the `.woas` file extension
 2. write your game in woas using the syntax guide below
-3. run the compiler script
+3. run/open the compiler
 4. pass the path to your .woas file
-
-## demo game
-i made a game in woas as a demo of the engine!
-[more details here once i actually make the game]
 
 ## controls
 players advance text by pressing space, clicking, or tapping anywhere on the game screen. choices are picked by clicking/tapping the option itself.
