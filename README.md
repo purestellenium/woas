@@ -34,6 +34,11 @@ i built:
 ## ts kinda useless, why did you build it?
 i made it cause i ~~needed hours for horizons polaris~~ wanted an easy to use engine to make story games/slideshows that are a bit more barebones than what renpy has to offer. i wanted to create a story-based game but the idea of having to use renpy and deal with all of the stuff to make it look nice (UI, character sprites, animations) and not like the default template overwhelmed me. woas is much more barebones and lets your story stand on its own two legs rather than bombarding you with tons of features you might not need that end up looking generic in the end.
 
+## demo game
+i made a small demo game to show off the capabilities of the engine!
+play the demo here: https://purestellenium.github.io/my-barista-girl/
+and view the source code here: https://github.com/purestellenium/woas/blob/main/demo.woas
+
 ## installation
 if you have python installed, you can just download the `compile.py` script and run it to compile your `.woas` files.
 
@@ -65,11 +70,6 @@ download the `.zip` file labeled "linux" from the [latest release](https://githu
 
 ## controls
 players advance text by pressing space, clicking, or tapping anywhere on the game screen. choices are picked by clicking/tapping the option itself.
-
-## demo game
-i made a small demo game to show off the capabilities of the engine!
-play the demo here: https://purestellenium.github.io/my-barista-girl/
-and view the source code here: https://github.com/purestellenium/woas/blob/main/demo.woas
 
 ## syntax guide
 woas is read line-by-line, meaning each line is one command.
