@@ -19,6 +19,10 @@ i made it cause i ~~needed hours for horizons polaris~~ wanted an easy to use en
 3. run the compiler script
 4. pass the path to your .woas file
 
+## demo game
+i made a game in woas as a demo of the engine!
+[more details here once i actually make the game]
+
 ## syntax guide
 woas is read line-by-line, meaning each line is one command.
 woas completely ignores all newlines, so they are optional but usable if you want to make your `.woas` code more readable.
