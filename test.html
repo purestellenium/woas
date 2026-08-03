@@ -203,7 +203,7 @@
 
             let choiceActive = false;
             let currentFont = "Georgia";
-            let currentColor = "blue";
+            let currentColor = "black";
             let music = new Audio();
 
             function doFirstQueue() {
@@ -317,6 +317,16 @@
                         doFirstQueue();
                     }
 
+                    return;
+                } else if (firstqueue[0] == "font") {
+                    currentFont = firstqueue[1];
+                    queue.shift();
+                    doFirstQueue();
+                    return;
+                } else if (firstqueue[0] == "color") {
+                    currentColor = firstqueue[1];
+                    queue.shift();
+                    doFirstQueue();
                     return;
                 } else {
                     queue.shift();

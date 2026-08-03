@@ -1,7 +1,6 @@
-import re, json
-# this is going to be the main compiler script! passing a valid .woas file into this script should generate a valid game
+import re, json, os
 
-file_path = input("Path to .woas file: ")
+file_path = input("Path to .woas file: ").strip()
 
 def parse_text_line(line):
     pattern = r'^"((?:\\.|[^"\\])*)"\s*(.*?)(?:\s*/\s*(\S+)(?:\s+(.*))?)?$'
@@ -55,7 +54,7 @@ def parse_choice_line(line):
     color = None
     
     if remainder.startswith('/'):
-        color_string = remainder[1:].strip() # Remove the '/' and spaces
+        color_string = remainder[1:].strip()
         if color_string and color_string.lower() != "null":
             color = color_string
             
@@ -66,10 +65,43 @@ def parse_choice_line(line):
     }
 
 def compile_game_from_file(filepath):
-    html = '''<!doctype html>
-    <html>
+    try:
+        title = None
+
+        with open(filepath, 'r') as file:
+            queue = []
+            for line in file:
+                if not line.strip():
+                    continue
+                
+                if line[0] == '"':
+                    to_insert = ["text"]
+                    data = parse_text_line(line.strip())
+                    to_insert.append(data["text"])
+                    to_insert.append(data["classes"])
+                    to_insert.append(data["color"])
+                    to_insert.append(data["font_family"])
+                    queue.append(to_insert)
+                elif line.startswith('choice '):
+                    data = parse_choice_line(line)
+                    to_insert = [
+                        "choice", 
+                        data["prompt"], 
+                        data["options"],
+                        data["color"]
+                    ]
+                    queue.append(to_insert)
+                elif line.startswith('title '):
+                    match = re.match(r'^title\s+"((?:\\.|[^"\\])*)"', line.strip())
+                    if match:
+                        title = match.group(1).replace('\\"', '"')
+                else:
+                    queue.append(line.split())
+        queue_json = json.dumps(queue)
+        html = """<!doctype html>
+<html>
     <head>
-        <title>title</title>
+        <title>%s</title>
         <style>
             body,
             html {
@@ -97,7 +129,25 @@ def compile_game_from_file(filepath):
                 flex-direction: column;
             }
 
-            p {
+            .choice {
+                display: flex;
+                justify-content: center;
+                gap: 7.5cqw;
+            }
+
+            .choice p {
+                cursor: pointer;
+            }
+
+            .choice-container {
+                display: flex;
+                flex-direction: column;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            p,
+            a {
                 font-family: Georgia;
                 margin: 2cqw;
             }
@@ -160,36 +210,23 @@ def compile_game_from_file(filepath):
         <div id="canvas"></div>
         <script>
             const canvas = document.getElementById("canvas");
-            let queue = '''
-    try:
-        with open(filepath, 'r') as file:
-            # generate queue
-            queue = []
-            for line in file:
-                # handle each line
-                if line[0] == '"':
-                    # text case
-                    to_insert = ["text"]
-                    data = parse_text_line(line.strip())
-                    to_insert.append(data["text"])
-                    to_insert.append(data["classes"])
-                    to_insert.append(data["color"])
-                    to_insert.append(data["font_family"])
-                    queue.append(to_insert)
-                else:
-                    # bg, music, jump case
-                    queue.append(line.split())
-        # convert queue from array into string that can be put into js
-        queue_json = json.dumps(queue)
-        # finish out html
+            let queue = 
+        """ % (title or filepath.replace(".woas", ""))
         html += queue_json + ";\n"
         html += """
+            let choiceActive = false;
             let currentFont = "Georgia";
-            let currentColor = "blue";
+            let currentColor = "black";
             let music = new Audio();
 
             function doFirstQueue() {
                 let firstqueue = queue[0];
+
+                if (!firstqueue) {
+                    canvas.replaceChildren();
+                    return;
+                }
+
                 if (firstqueue[0] == "text") {
                     const text = document.createElement("p");
 
@@ -221,7 +258,92 @@ def compile_game_from_file(filepath):
                     queue.shift();
                     doFirstQueue();
                     return;
+                } else if (firstqueue[0] == "choice") {
+                    choiceActive = true;
+                    // create choice container
+
+                    let promptText = firstqueue[1];
+                    let optionsArray = firstqueue[2];
+                    let textColor = firstqueue[3];
+
+                    let container = document.createElement("div");
+                    container.className = "choice-container";
+
+                    let promptParagraph = document.createElement("p");
+                    promptParagraph.className = "l center";
+                    promptParagraph.innerText = promptText;
+                    if (textColor) {
+                        promptParagraph.style.color = textColor;
+                    }
+                    container.appendChild(promptParagraph);
+
+                    let choiceDiv = document.createElement("div");
+                    choiceDiv.className = "choice";
+
+                    optionsArray.forEach((option) => {
+                        let optionButton = document.createElement("p");
+                        optionButton.className = "m";
+                        optionButton.innerText = option.text;
+
+                        if (textColor) {
+                            optionButton.style.color = textColor;
+                        }
+
+                        optionButton.addEventListener("click", function (e) {
+                            while (
+                                queue.length > 0 &&
+                                !(
+                                    queue[0][0] === "jump" &&
+                                    queue[0][1] === option.jump
+                                )
+                            ) {
+                                queue.shift();
+                            }
+
+                            if (queue.length > 0) {
+                                queue.shift();
+                            }
+
+                            choiceActive = false;
+                            doFirstQueue();
+                        });
+
+                        choiceDiv.appendChild(optionButton);
+                    });
+
+                    container.appendChild(choiceDiv);
+                    canvas.replaceChildren(container);
+                    return;
+                } else if (firstqueue[0] == "jump") {
+                    while (
+                        queue.length > 0 &&
+                        !(
+                            queue[0][0] === "end" &&
+                            queue[0][1] === firstqueue[1]
+                        )
+                    ) {
+                        queue.shift();
+                    }
+
+                    if (queue.length > 0) {
+                        queue.shift();
+                        doFirstQueue();
+                    }
+
+                    return;
+                } else if (firstqueue[0] == "font") {
+                    currentFont = firstqueue[1];
+                    queue.shift();
+                    doFirstQueue();
+                    return;
+                } else if (firstqueue[0] == "color") {
+                    currentColor = firstqueue[1];
+                    queue.shift();
+                    doFirstQueue();
+                    return;
                 } else {
+                    queue.shift();
+                    doFirstQueue();
                     return;
                 }
             }
@@ -231,15 +353,14 @@ def compile_game_from_file(filepath):
             document.addEventListener("keydown", (event) => {
                 if (event.repeat) return;
 
-                if (event.code === "Space") {
-                    // pops queue and refreshes screen
+                if (event.code === "Space" && !choiceActive) {
                     queue.shift();
                     doFirstQueue();
                 }
             });
         </script>
     </body>
-    </html>
+</html>
         """
 
         output_filepath = filepath.replace(".woas", ".html")
@@ -250,4 +371,9 @@ def compile_game_from_file(filepath):
     except Exception as e:
         print(f"Game failed to compile: {e}")
 
-compile_game_from_file(file_path)
+if not file_path.endswith(".woas"):
+    print("Error: File must be a .woas file!")
+elif not os.path.isfile(file_path):
+    print("Error: File does not exist!")
+else:
+    compile_game_from_file(file_path)

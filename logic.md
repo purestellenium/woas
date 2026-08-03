@@ -60,3 +60,9 @@ jump jumpid
 
 when a jump ends:
 end jumpid
+
+font (set default font-family):
+font font-family
+
+color (set default font color):
+color color
