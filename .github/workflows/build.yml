@@ -1,0 +1,45 @@
+name: Build executables
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            asset_name: woas-compiler-windows.exe
+          - os: macos-latest
+            asset_name: woas-compiler-macos
+          - os: ubuntu-latest
+            asset_name: woas-compiler-linux
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build executable
+        run: pyinstaller --onefile --name woas-compiler compile.py
+
+      - name: Rename output (Windows)
+        if: runner.os == 'Windows'
+        run: Rename-Item -Path dist/woas-compiler.exe -NewName ${{ matrix.asset_name }}
+
+      - name: Rename output (Unix)
+        if: runner.os != 'Windows'
+        run: mv dist/woas-compiler dist/${{ matrix.asset_name }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: dist/${{ matrix.asset_name }}
