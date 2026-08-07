@@ -7,6 +7,7 @@ a domain-specific language used to make text-based games that outputs entirely i
 ## table of contents
 - [uhh what did you even make?](#uhh-what-did-you-even-make)
 - [ts kinda useless, why did you build it?](#ts-kinda-useless-why-did-you-build-it)
+- [demo game](#demo-game)
 - [installation](#installation)
   - [windows](#windows)
   - [macos](#macos)
@@ -23,6 +24,8 @@ a domain-specific language used to make text-based games that outputs entirely i
   - [6. global styling](#6-global-styling)
   - [7. importing custom fonts](#7-importing-custom-fonts)
   - [8. music](#8-music)
+  - [9. comments](#9-comments)
+- [ai declaration](#ai-declaration)
 - [contributing](#contributing)
 
 ## uhh what did you even make?
